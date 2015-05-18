@@ -1,0 +1,23 @@
+{
+  "name": "fis3-plugin-relative",
+  "version": "1.0.0",
+  "description": "fis3 relative path support",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fex-team/fis3-plugin-relative.git"
+  },
+  "keywords": [
+    "fis3",
+    "relative"
+  ],
+  "author": "fis",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/fex-team/fis3-plugin-relative/issues"
+  },
+  "homepage": "https://github.com/fex-team/fis3-plugin-relative"
+}
