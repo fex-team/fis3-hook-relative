@@ -1,6 +1,6 @@
 {
   "name": "fis3-plugin-relative",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "fis3 relative path support",
   "main": "index.js",
   "scripts": {

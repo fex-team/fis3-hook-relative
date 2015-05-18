@@ -8,16 +8,22 @@ function wrap(value) {
 }
 
 function getRelativeUrl(file, host) {
-  var url = file.getUrl();
+  var url;
 
-  if (file.useDomain && file.domain) {
-    return url;
-  }
+  if (typeof file === 'string') {
+    url = file;
+  } else {
+    var url = file.getUrl();
 
-  url = file.url;
+    if (file.useDomain && file.domain) {
+      return url;
+    }
 
-  if (file.useHash) {
-    url = addHash(url, file);
+    url = file.url;
+
+    if (file.useHash) {
+      url = addHash(url, file);
+    }
   }
 
   var relativeFrom = typeof host.relative === 'string' ? host.relative : host.release;
@@ -26,7 +32,7 @@ function getRelativeUrl(file, host) {
   }
   url = path.relative(relativeFrom, url);
 
-  return url + file.query;
+  return url + (file.query || '');
 }
 
 function convert(content, file, host) {
@@ -84,12 +90,11 @@ function onFetchRelativeUrl(message) {
   var target = message.target;
   var host = message.file;
 
-  if (!target.relative) {
+  if (!host.relative) {
     return;
   }
 
-  var url = getRelativeUrl(target, host);
-  return url;
+  message.ret = getRelativeUrl(target, host);
 }
 
 /**
