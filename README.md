@@ -1,4 +1,4 @@
-# fis3-plugin-relative
+# fis3-hook-relative
 让 fis 产出能够支持相对路径。
 
 ## 如何使用？
@@ -8,20 +8,20 @@
 全局安装
 
 ```
-npm install -g fis3-plugin-relative
+npm install -g fis3-hook-relative
 ```
 
 或者，局部安装
 
 ```
-npm install fis3-plugin-relative
+npm install fis3-hook-relative
 ```
 
 ### 2. 配置启动
 
 ```javascript
-// 别丢失已配置的插件。
-fis.set('modules.plugin', fis.get('modules.plugin') + ', relative');
+// 启用插件
+fis.hook('relative');
 
 // 让所有文件，都使用相对路径。
 fis.match('**', {
@@ -38,4 +38,8 @@ fis.match('/templates/xxx.tpl', {
   relative: '/user/' // 服务端访问路径
 });
 ```
+
+### 注意
+
+如果 js 文件中有引用其他资源的情况。相对路径相对的其实不是 js 所在目录，而是页面所在目录。所以这块，如果要正确处理，也需要配置 relative 属性。
 
