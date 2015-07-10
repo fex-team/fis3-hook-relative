@@ -38,6 +38,11 @@ function getRelativeUrl(file, host) {
 function convert(content, file, host) {
   return content.replace(rUrl, function(all, value) {
     var info = fis.project.lookup(value);
+
+    if (!info.file) {
+      return info.origin;
+    }
+
     var query = (info.file.query && info.query) ? '&' + info.query.substring(1) : info.query;
     var hash = info.hash || info.file.hash;
     var url = getRelativeUrl(info.file, host || file);
@@ -52,7 +57,8 @@ function onStandardRestoreUri(message) {
   var info = message.info;
 
   // 没有配置，不开启。
-  if (!file.relative) {
+  // 或者目标文件不存在
+  if (!file.relative || !info.file) {
     return;
   }
 
