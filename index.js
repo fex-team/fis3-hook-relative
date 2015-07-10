@@ -32,7 +32,7 @@ function getRelativeUrl(file, host) {
   }
   url = path.relative(relativeFrom, url);
 
-  return url + (file.query || '');
+  return url.replace(/\\/g, '/') + (file.query || '');
 }
 
 function convert(content, file, host) {
@@ -42,6 +42,9 @@ function convert(content, file, host) {
     if (!info.file) {
       return info.origin;
     }
+
+    // 再编译一遍，为了保证 hash 值是一样的。
+    fis.compile(info.file);
 
     var query = (info.file.query && info.query) ? '&' + info.query.substring(1) : info.query;
     var hash = info.hash || info.file.hash;
