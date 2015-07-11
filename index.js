@@ -18,18 +18,13 @@ function getRelativeUrl(file, host) {
     if (file.useDomain && file.domain) {
       return url;
     }
-
-    url = file.url;
-
-    if (file.useHash) {
-      url = addHash(url, file);
-    }
   }
 
   var relativeFrom = typeof host.relative === 'string' ? host.relative : host.release;
   if (rFile.test(relativeFrom)) {
     relativeFrom = path.dirname(relativeFrom);
   }
+  
   url = path.relative(relativeFrom, url);
 
   return url.replace(/\\/g, '/') + (file.query || '');
@@ -104,22 +99,6 @@ function onFetchRelativeUrl(message) {
   }
 
   message.ret = getRelativeUrl(target, host);
-}
-
-/**
- * 给文件添加md5标识符
- * @param {String} path 文件路径
- * @param {Object} file fis File对象
- * @return {String} 带有md5 hash标识的路径
- */
-function addHash(path, file) {
-  var rExt = file.rExt,
-    qRExt = fis.util.escapeReg(rExt),
-    qExt = fis.util.escapeReg(file.ext),
-    hash = file.getHash(),
-    onnector = fis.env().get('project.md5Connector', '_'),
-    reg = new RegExp(qRExt + '$|' + qExt + '$', 'i');
-  return path.replace(reg, '') + onnector + hash + rExt;
 }
 
 module.exports = function(fis, opts) {
