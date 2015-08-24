@@ -43,3 +43,20 @@ fis.match('/templates/xxx.tpl', {
 
 如果 js 文件中有引用其他资源的情况。相对路径相对的其实不是 js 所在目录，而是页面所在目录。所以这块，如果要正确处理，也需要配置 relative 属性。
 
+## API
+
+此插件还提供其他插件生成相对地址。如：
+
+```js
+var message = {
+  target: target, // 目标文件对象，或者目标文件的绝对 url
+  file: file // target 相对的文件。
+};
+fis.emit('plugin:relative:fetch', message);
+
+// 如果 fis3-hook-relative 开启了。
+// 那么 message.ret 将返回 target 相对与 file 的相对路径。
+console.log(message.ret);
+```
+
+因为其他插件与该插件是非耦合的，所以是通过发送事件的方式询问，如果起了该插件，那么监听此事件来处理相对路径。
