@@ -1,10 +1,10 @@
 
-var rUrl = /\u001Frelative\u001F([\s\S]*?)\u001F/g;
+var rUrl = /__relative\(([\s\S]*?)\)/g;
 var path = require('path');
 var rFile = /\.[^\.]+$/;
 
 function wrap(value) {
-  return '\u001Frelative\u001F' + value + '\u001F';
+  return '__relative(' + value + ')';
 }
 
 function getRelativeUrl(file, host) {
@@ -24,7 +24,7 @@ function getRelativeUrl(file, host) {
   if (rFile.test(relativeFrom)) {
     relativeFrom = path.dirname(relativeFrom);
   }
-  
+
   url = path.relative(relativeFrom, url);
 
   return url.replace(/\\/g, '/') + (file.query || '');
