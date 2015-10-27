@@ -15,7 +15,7 @@ function getRelativeUrl(file, host) {
   } else {
     var url = file.getUrl();
 
-    if (file.useDomain && file.domain) {
+    if (file.domain) {
       return url;
     }
   }
