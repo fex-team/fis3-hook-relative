@@ -26,8 +26,7 @@ function getRelativeUrl(file, host) {
   }
 
   url = path.relative(relativeFrom, url);
-
-  return url.replace(/\\/g, '/') + (file.query || '');
+  return url.replace(/\\/g, '/');
 }
 
 function convert(content, file, host) {
@@ -41,12 +40,30 @@ function convert(content, file, host) {
     // 再编译一遍，为了保证 hash 值是一样的。
     fis.compile(info.file);
 
-    var query = (info.file.query && info.query) ? '&' + info.query.substring(1) : info.query;
+    var query = info.query;
     var hash = info.hash || info.file.hash;
     var url = getRelativeUrl(info.file, host || file);
 
-    return info.quote + url + query + hash + info.quote;
+    var parts = url.split('?');
+
+    if (parts.length > 1 && query)  {
+      url = parts[0] + query + '&amp;' + parts[1];
+    } else if (query) {
+      url += query;
+    }
+
+    return info.quote + url + hash + info.quote;
   });
+}
+
+function combineQuery(query1, query2) {
+  query1 = query1.replace(/^\?/, '');
+  query2 = query2.replace(/^\?/, '');
+  var arr = [];
+  query1 && arr.push(query1);
+  query2 && arr.push(query2);
+  var query = arr.join('&');
+  return query ? '?' + query : '';
 }
 
 function onStandardRestoreUri(message) {
@@ -60,8 +77,7 @@ function onStandardRestoreUri(message) {
     return;
   }
 
-  var query = (info.file.query && info.query) ? '&' + info.query.substring(1) : info.query;
-  message.ret = wrap(info.quote + info.file.subpath + query + info.quote);
+  message.ret = wrap(info.quote + info.file.subpath + info.query + info.quote);
 };
 
 function onProcessEnd(file) {
