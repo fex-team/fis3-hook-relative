@@ -119,7 +119,7 @@ function onFetchRelativeUrl(message) {
 
 module.exports = function(fis, opts) {
 
-  fis.on('proccess:end', onProcessEnd);
+  fis.on('process:end', onProcessEnd);
   fis.on('standard:restore:uri', onStandardRestoreUri);
   fis.on('pack:file', onPackFile);
 
