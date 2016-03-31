@@ -42,7 +42,7 @@ function convert(content, file, host) {
 
     var query = info.query;
     var hash = info.hash || info.file.hash;
-    var url = /__sprite/.test(info.origin) ? info.file.getUrl() : getRelativeUrl(info.file, host || file);
+    var url = /*/__sprite/.test(info.origin) ? info.file.getUrl() : */getRelativeUrl(info.file, host || file);
 
     var parts = url.split('?');
 
