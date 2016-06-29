@@ -82,7 +82,7 @@ function onStandardRestoreUri(message) {
 
 function onProcessEnd(file) {
   // 没有配置，不开启。
-  if (!file.relative || !file.isText()) {
+  if (!file.relative || !file.isText() || file.isInline) {
     return;
   }
 
