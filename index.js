@@ -1,10 +1,10 @@
 
-var rUrl = /__relative\(([\s\S]*?)\)/g;
+var rUrl = /__relative<<<([\s\S]*?)>>>/g;
 var path = require('path');
 var rFile = /\.[^\.]+$/;
 
 function wrap(value) {
-  return '__relative(' + value + ')';
+  return '__relative<<<' + value + '>>>';
 }
 
 function getRelativeUrl(file, host) {
