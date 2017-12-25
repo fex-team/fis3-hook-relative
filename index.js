@@ -116,6 +116,25 @@ function onFetchRelativeUrl(message) {
   message.ret = getRelativeUrl(target, host);
 }
 
+/**
+ * onFetchRelativeFile 把文件内容调整成相对路径
+ * @param  {Object} message 
+ * @param  {Object} message.file       要操作的文件对象
+ * @param  {Object} message.relativeTo 相对的文件对象
+ * @return {String} content 生成调整成相对路径的文件内容
+ */
+function onFetchRelativeFile(message) {
+  var file = message.file;
+  var host = message.relativeTo;
+
+  if (!host.relative || !file.relativeBody) {
+    return;
+  }
+  content = convert(file.relativeBody, file, host);
+
+  message.content = content;
+}
+
 module.exports = function(fis, opts) {
 
   fis.on('process:end', onProcessEnd);
@@ -124,4 +143,6 @@ module.exports = function(fis, opts) {
 
   // 给其他插件用的
   fis.on('plugin:relative:fetch', onFetchRelativeUrl);
+  fis.on('plugin:relative:fetchContent', onFetchRelativeFile);
+  
 };
