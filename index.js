@@ -38,7 +38,7 @@ function convert(content, file, host) {
     }
 
     // 再编译一遍，为了保证 hash 值是一样的。
-    fis.compile(info.file);
+    info.file.useHash && fis.compile(info.file);
 
     var query = info.query;
     var hash = info.hash || info.file.hash;
@@ -76,8 +76,7 @@ function onStandardRestoreUri(message) {
   if (!file.relative || !info.file) {
     return;
   }
-
-  message.ret = info.quote + wrap(info.file.subpath + info.query) + info.quote;
+  message.ret = info.quote + wrap(info.file.subpath + info.query + info.hash) + info.quote;
 };
 
 function onProcessEnd(file) {
