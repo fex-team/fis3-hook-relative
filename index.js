@@ -77,7 +77,7 @@ function onStandardRestoreUri(message) {
     return;
   }
 
-  message.ret = wrap(info.quote + info.file.subpath + info.query + info.quote);
+  message.ret = wrap(info.quote + info.file.subpath + info.query + info.hash + info.quote);
 };
 
 function onProcessEnd(file) {
